@@ -1,4 +1,4 @@
-一个基于于antd的模板
+一个基于antd的模板
 
 > 该项目基于```create-react-app```创建。
 
