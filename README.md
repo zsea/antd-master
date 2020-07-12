@@ -38,12 +38,14 @@
 |---|---|---|
 |REACT_APP_COPYRIGHT| |页面脚部版权信息的设置|
 |REACT_APP_SYSTEMT_NAME| |系统名称设置|
+|REACT_APP_KEEPALIVE| |母版页是否定时请求keepalive接口，用于保持用户存活。|
+|REACT_APP_MENU_THEME|dark |菜单样式，可选值：```light|dark```|
 
 # 目录结构
 
 * /src/ 源代码目录
     * /src/components/ 用户编写的组件。
-    * /src/Layout/ 布局文件，目前仅有```FullLayout```。
+    * /src/Layout/ 布局文件，目前仅有```FullLayout```与```EmptyLayout```。
     * /src/module/ 一些常用的模块
     * /src/icons.js 图标配置
     * /src/Master.js 母版页

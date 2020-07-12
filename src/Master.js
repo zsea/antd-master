@@ -7,7 +7,7 @@ import routes from "./routes"
 import { getCookie, setCookie } from "./module/cookie"
 const { Header, Content, Footer, Sider } = Layout;
 
-const theme = "dark";
+const theme = process.env["REACT_APP_MENU_THEME"]||"dark";
 
 function toRouters(item, routerList) {
     //let routerList=[];
@@ -41,14 +41,14 @@ const MenuItem = item => {
         children = [];
     }
     if (children.length) {
-        return <Menu.SubMenu key={item.id} title={<span>{item.icon ? <item.icon /> : null}<span>{item.menu}</span></span>}>
+        return <Menu.SubMenu key={item.id} title={<span>{item.menu && item.menu.icon ? <item.menu.icon /> : null}<span>{item.menu.text}</span></span>}>
             {children.map(MenuItem)}
         </Menu.SubMenu>
     }
     else {
         return <Menu.Item key={item.id} path={item.router.path}>
-            {item.icon ? <item.icon /> : null}
-            <span>{item.menu}</span>
+            {item.menu && item.menu.icon ? <item.menu.icon /> : null}
+            <span>{item.menu.text}</span>
         </Menu.Item>;
     }
 }
@@ -128,7 +128,7 @@ class MasterBody extends Component {
                         {this.state.collapsed ? null : <h1>{process.env.REACT_APP_SYSTEMT_NAME}</h1>}
                     </a>
                 </div>
-                <TMenu selected={this.props.route.id} opens={this.props.route.menu?this.props.route.menu.opens:[]} menus={routes.filter(p => !!p.menu)} />
+                <TMenu selected={this.props.route.id} opens={this.props.route.menu ? this.props.route.menu.opens : []} menus={routes.filter(p => p.menu&&p.menu.text)} />
             </Sider>
             <Layout>
                 <Header style={{ background: '#fff', padding: "0 32 0 0", textAlign: "right" }}>
@@ -149,10 +149,11 @@ class MasterBody extends Component {
 class Master extends Component {
 
     componentDidMount() {
-        // setInterval(async () => {
-        //     await fetch("/api/keeplive?_=" + Date.now());
-
-        // }, 1 * 60 * 1000);
+        if (process.env["REACT_APP_KEEPALIVE"] === "true") {
+            setInterval(async () => {
+                await fetch("/api/keeplive?_=" + Date.now());
+            }, 1 * 60 * 1000);
+        }
     }
     render() {
         let routerList = getRouters();
