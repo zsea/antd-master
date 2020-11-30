@@ -4,11 +4,14 @@ module.exports = override(
     fixBabelImports('import', {
         libraryName: 'antd',
         libraryDirectory: 'es',
-        style: 'css',
+        style: true,
     }),
     addWebpackPlugin(new AntdDayjsWebpackPlugin()),
     addLessLoader({
-        javascriptEnabled: true,
-        modifyVars: { '@primary-color': '#1DA57A' },
+        lessOptions:{
+            javascriptEnabled: true,
+            modifyVars: {'@master-header-backgroud-color':"white", '@primary-color': '#1DA57A' },
+        }
+        
     })
 );

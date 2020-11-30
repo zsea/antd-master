@@ -1,3 +1,7 @@
+body{
+  background-color:rgb(240,242,245);
+}
+/*
 .ant-pro-sider-menu-logo{
   position: relative;
   padding: 0 24px;
@@ -28,3 +32,4 @@
   animation: fade-in;
   animation-duration: .3s
 }
+*/

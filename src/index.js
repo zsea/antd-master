@@ -5,8 +5,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import * as serviceWorker from './serviceWorker';
 import {ConfigProvider} from "antd"
 import zhCN from 'antd/es/locale/zh_CN';
-import netHook from "./module/nethook"
-netHook();
+
 const supportsHistory = !!window.history["pushState"];
 ReactDOM.render((
     <Router forceRefresh={!supportsHistory}>

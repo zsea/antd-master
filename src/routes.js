@@ -1,5 +1,7 @@
 import NotFound from "./NotFound"
 import FullLayout from "./Layout/full"
+import EmptyLayout from "./Layout/Empty"
+import LoginLayout from "./Layout/LoginLayout"
 
 import Login from "./components/Login"
 import Index from "./components/index"
@@ -19,7 +21,7 @@ const routes = [
         requiresAuth: false,
         breadcrumb: [],
         component: Login,
-        layout: FullLayout,
+        layout: LoginLayout,
         menu: {
             text: "",
             icon: "",
