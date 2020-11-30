@@ -122,7 +122,6 @@ class MasterBody extends Component {
         if (this.state.isbroken) {
             stateLayout = "top";
         }
-        console.log(stateLayout, this.state.isbroken)
         switch (stateLayout) {
             case "left": {
                 return <Layout style={{ minHeight: '100vh' }}>
