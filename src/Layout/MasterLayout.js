@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 //import {BrowserRouter as Router, Route, Link ,withRouter} from 'react-router-dom';
 import { withRouter } from 'react-router-dom'
-import { Layout, Menu, Breadcrumb, Modal, Row, Col } from 'antd';
+import { Layout, Menu, Breadcrumb, Row, Col, Drawer, Button } from 'antd';
+import { MenuUnfoldOutlined } from '@ant-design/icons';
 import routes from "../routes"
 import Logo from "../components/Headers/Logo"
 import Right from "../components/Headers/Right"
@@ -60,17 +61,17 @@ const TMenu = withRouter(props => {
 class MasterBody extends Component {
     state = {
         collapsed: window.localStorage.getItem("antd-master-collapsed") === "true",
-        layout: "top",
+        layout: "left",
         isbroken: false,
 
         //自适应相关
+        //drawer_visible: window.localStorage.getItem("antd-master-drawer-visible") === "true"
     };
     constructor(props) {
         super(props);
-
-
         this.onBreakpoint = this.onBreakpoint.bind(this);
-
+        this.onChangeDrawer = this.onChangeDrawer.bind(this);
+        this.onDrawerClose = this.onDrawerClose.bind(this);
 
         const mql = window.matchMedia(`(max-width: ${media_max_width}px)`);
         mql.addEventListener("change", this.onBreakpoint);
@@ -81,46 +82,30 @@ class MasterBody extends Component {
     }
     onCollapse = collapsed => {
         this.setState({ collapsed });
-        //setCookie("collapsed", collapsed ? "true" : "false", 365);
         window.localStorage.setItem("antd-master-collapsed", collapsed ? "true" : "false");
     };
+    onChangeDrawer() {
+        let visible = !this.state.drawer_visible;
+        this.setState({ drawer_visible: visible })
+        window.localStorage.setItem("antd-master-drawer-visible", visible ? "true" : "false");
+    }
+    onDrawerClose() {
+        this.setState({ drawer_visible: false });
+        window.localStorage.setItem("antd-master-drawer-visible", "false");
+    }
     componentDidMount() {
-        //fetch(configure.baseAPI + "/test/setjwt", { mode: 'cors', credentials: "include" })
-        //setHistory(this.props.history);
         let collapsed = window.localStorage.getItem("antd-master-collapsed") === "true";
-        if (collapsed) {
-            this.setState({ collapsed: true });
-        }
-        else {
-            this.setState({ collapsed: false });
-        }
+        this.setState({ collapsed: collapsed });
     }
     onBreakpoint({ matches }) {
         if (matches !== this.state.isbroken) {
             this.setState({ isbroken: matches });
         }
     }
-    onLogout = async () => {
-        var $continue = await new Promise(function (resolve) {
-            Modal.confirm({
-                title: "请确认",
-                content: "你确定要退出登录吗？",
-                onOk: function () {
-                    resolve(true);
-                },
-                onCancel: function () {
-                    resolve(false);
-                }
-            })
-        });
-        if (!$continue) return;
-        //console.log(this.props);
-        this.props.props.history.push("/logout");
-    }
     render() {
         let stateLayout = this.state.layout;
         if (this.state.isbroken) {
-            stateLayout = "top";
+            stateLayout = "mobile";
         }
         switch (stateLayout) {
             case "left": {
@@ -181,6 +166,37 @@ class MasterBody extends Component {
                         <Sider theme={theme} collapsible collapsed={this.state.collapsed} onCollapse={this.onCollapse}>
                             <TMenu broken={this.state.isbroken} layout={this.state.layout} selected={this.props.route.id} opens={this.props.route.menu ? this.props.route.menu.opens : []} menus={routes.filter(p => p.menu && p.menu.text)} />
                         </Sider>
+                        <Layout>
+                            <Content style={{ margin: '0 16px' }}>
+                                <BreadcrumbComponent breadcrumbs={this.props.route.breadcrumb} />
+                                <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
+                                    <this.props.route.component {...this.props.props} />
+                                </div>
+                            </Content>
+                            <Footer style={{ textAlign: 'center' }}>{process.env.REACT_APP_COPYRIGHT}</Footer>
+                        </Layout>
+                    </Layout>
+                </Layout>
+            }
+            case "mobile": {
+                return <Layout style={{ minHeight: '100vh' }}>
+                    <Drawer
+                        title={<Logo broken={this.state.isbroken} collapsed={this.state.collapsed} layout={this.state.layout} />}
+                        placement="left"
+                        closable={false}
+                        onClose={this.onDrawerClose}
+                        visible={this.state.drawer_visible}
+                    >
+                        <TMenu broken={this.state.isbroken} layout={this.state.layout} selected={this.props.route.id} opens={this.props.route.menu ? this.props.route.menu.opens : []} menus={routes.filter(p => p.menu && p.menu.text)} />
+                    </Drawer>
+                    <Header className="master-header">
+                        <Row>
+                            <Col span={8}><Button onClick={this.onChangeDrawer}><MenuUnfoldOutlined /></Button></Col>
+                            <Col span={8}><Center broken={this.state.isbroken} collapsed={this.state.collapsed} layout={this.state.layout} /></Col>
+                            <Col span={8}><Right broken={this.state.isbroken} collapsed={this.state.collapsed} layout={this.state.layout} /></Col>
+                        </Row>
+                    </Header>
+                    <Layout>
                         <Layout>
                             <Content style={{ margin: '0 16px' }}>
                                 <BreadcrumbComponent breadcrumbs={this.props.route.breadcrumb} />

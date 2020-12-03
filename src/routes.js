@@ -1,13 +1,12 @@
-import NotFound from "./NotFound"
+import NotFound from "./pages/NotFound"
 import FullLayout from "./Layout/full"
-import EmptyLayout from "./Layout/Empty"
 import LoginLayout from "./Layout/LoginLayout"
 
-import Login from "./components/Login"
-import Index from "./components/index"
-import About from "./components/About"
-import Menu from "./components/Menu"
-import SubMenu from "./components/SubMenu"
+import Login from "./pages/Login"
+import Index from "./pages/index"
+import About from "./pages/About"
+import Menu from "./pages/Menu"
+import SubMenu from "./pages/SubMenu"
 
 import { HomeOutlined, QuestionOutlined, ArrowRightOutlined } from '@ant-design/icons';
 const routes = [
@@ -87,7 +86,7 @@ const routes = [
             breadcrumb: [],
             component: SubMenu,
             menu: {
-                text: "子菜单",
+                text: "认证页面",
                 icon: ArrowRightOutlined,
                 opens: ["menu"]
             }

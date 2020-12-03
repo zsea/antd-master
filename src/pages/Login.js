@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import { Form, Input, Button, Checkbox, message, Tabs, Row, Col,Modal } from 'antd';
+import { Form, Input, Button, Checkbox, message, Tabs, Row, Col, Modal } from 'antd';
 import { UserOutlined, LockOutlined, MobileOutlined, MailOutlined } from '@ant-design/icons';
 import axios from "axios"
 import md5 from "md5"
-import { setCookie, getCookie } from "../module/cookie"
 import QRCode from 'qrcode.react'
 import "./login.css"
 class Login extends Component {
@@ -15,8 +14,8 @@ class Login extends Component {
         super(props);
         this.onAccountLogin = this.onAccountLogin.bind(this);
         this.onMobileLogin = this.onMobileLogin.bind(this);
-        this.state.remember = getCookie("is_remember") !== "false";
-        this.state.username = getCookie("remember_username") || "";
+        this.state.remember = window.localStorage.getItem("antd-master-rember-user") === "true";
+        this.state.username = window.localStorage.getItem("antd-master-username");
     }
     componentDidMount() {
         //this.Logining();
@@ -37,19 +36,19 @@ class Login extends Component {
             return;
         }
         if (options.remember) {
-            setCookie("remember_username", options.username, 365);
-            setCookie("is_remember", "true", 365);
+            window.localStorage.setItem("antd-master-rember-user", "true")
+            window.localStorage.setItem("antd-master-username", options.username)
         }
         else {
-            setCookie("remember_username", "", -1);
-            setCookie("is_remember", "", -1);
+            window.localStorage.removeItem("antd-master-rember-user");
+            window.localStorage.removeItem("antd-master-username");
         }
         this.props.history.push("/");
     }
-    async onMobileLogin(options){
+    async onMobileLogin(options) {
         Modal.error({
-            title:"未实现",
-            content:"当前功能未实现。"
+            title: "未实现",
+            content: "当前功能未实现。"
         })
     }
     render() {

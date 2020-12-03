@@ -20,7 +20,7 @@ class Logo extends Component {
         return <div className="antd-master-logo">
             <a href="/">
                 <img src="https://preview.pro.ant.design/static/logo.f0355d39.svg" alt="logo" />
-                {this.state.collapsed ? null : <h1>{process.env.REACT_APP_SYSTEMT_NAME}</h1>}
+                {this.state.collapsed || this.state.broken ? null : <h1>{process.env.REACT_APP_SYSTEMT_NAME}</h1>}
             </a>
         </div>
     }
