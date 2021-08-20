@@ -39,7 +39,7 @@
 |REACT_APP_COPYRIGHT| |页面脚部版权信息的设置|
 |REACT_APP_SYSTEMT_NAME| |系统名称设置|
 |REACT_APP_KEEPALIVE| |母版页是否定时请求keepalive接口，用于保持用户存活。|
-|REACT_APP_MENU_THEME|dark |菜单样式，可选值：```light|dark```|
+|REACT_APP_MENU_THEME|dark |菜单样式，可选值：```light\|dark```|
 
 # 目录结构
 

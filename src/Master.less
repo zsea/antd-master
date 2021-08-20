@@ -1,8 +1,17 @@
+.themeBackground (@theme) when (@theme = dark){
+  background: #000000;
+}
+.themeBackground (@theme) when (@theme = light){
+  background: #FFFFFF;
+}
+.themeBackground (@theme) {
+  font-size: "#000000";
+}
 .ant-pro-sider-menu-logo{
   position: relative;
   padding: 0 24px;
   overflow: hidden;
-  background: #001529;
+  .themeBackground(@theme-name);
   cursor: pointer;
   transition: all .3s
 }
@@ -21,10 +30,15 @@
 .ant-pro-sider-menu-logo h1 {
   display: inline-block;
   margin: 0 0 0 12px;
-  color: #fff;
+  color: @primary-color;
   font-weight: 600;
   font-size: 20px;
   vertical-align: middle;
   animation: fade-in;
   animation-duration: .3s
+}
+
+li.ant-menu-item{
+  margin-top: 0px !important;
+  margin-bottom: 0px !important;
 }
