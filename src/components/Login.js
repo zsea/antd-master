@@ -20,6 +20,9 @@ class Login extends Component {
         this.setState({ remember: true });
     }
     async onSubmit(options) {
+        message.success("正在登陆...");
+        this.props.history.push("/");
+        return;
         let form = {
             username: options.username,
             time: Date.now()
