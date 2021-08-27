@@ -82,11 +82,15 @@ class MasterBody extends Component {
     static getDerivedStateFromProps(props, state) {
         return {
             onMenuOpenChange: props.onMenuOpenChange,
-            menu_open_keys: props.menu_open_keys
+            menu_open_keys: props.menu_open_keys,
+            collapsed: state.collapsed,
+            system_visible: state.system_visible
         };
     }
     onCollapse = async collapsed => {
+        //console.log(Date.now(), collapsed);
         this.setState({ collapsed });
+        //alert(collapsed);
         setCookie("collapsed", collapsed ? "true" : "false", 365);
         if (!collapsed) {
             await sleep(300);
@@ -96,17 +100,18 @@ class MasterBody extends Component {
     constructor(props) {
         super(props);
         this.state.onMenuOpenChange = props.onMenuOpenChange;
-        this.state.menu_open_keys = props.menu_open_keys
+        this.state.menu_open_keys = props.menu_open_keys;
+        //console.log("aaa");
     }
     componentDidMount() {
         //fetch(configure.baseAPI + "/test/setjwt", { mode: 'cors', credentials: "include" })
         //setHistory(this.props.history);
         let collapsed = getCookie("collapsed");
         if (collapsed === "true") {
-            this.setState({ collapsed: true });
+            this.setState({ collapsed: true, system_visible: false });
         }
         else if (collapsed === "false") {
-            this.setState({ collapsed: false });
+            this.setState({ collapsed: false, system_visible: true });
         }
     }
     onLogout = async () => {
